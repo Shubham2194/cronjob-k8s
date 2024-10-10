@@ -126,7 +126,7 @@ spec:
 
 ```
 
-Firstly we are creating a job to test if it working fine then we will set the same as cron and add schedule.
+Firstly we are creating a job to test if it will work fine then we will set the same as cron and add schedule.
 
 Step 5:
 Check the cron status 

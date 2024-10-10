@@ -98,3 +98,24 @@ spec:
 ```
 This will use our private key and add in the known host.
 
+Step 5:
+Clone my repo and hit
+
+```sh
+kubectl apply -f cron.yaml
+```
+
+Check the cron status 
+
+```sh
+kubectl get jobs --watch
+```
+
+Get the logs of the cron job
+
+```sh
+ pods=$(kubectl get pods --selector=job-name=sales-sheet-cron-28809103)
+ kubectl logs $pods
+```
+
+Step 6:

@@ -21,7 +21,7 @@ kind create cluster --name xyz
 Step 2:
 Note down the commands you Would like to run with the cronjob and the schedule timimngs i.e making backups, creating reports, sending emails, cleanup tasks etc
 
-(Our SCENERIO for this POC : i am going cloning my repo with cron and run my bash script present in my repo at 9AM IST everyday)
+(Our SCENERIO for this POC : i am going to clone my repo with cronjob and run my bash script present in my repository at 9AM IST everyday)
 
 Create a file and the paste the below content.
 

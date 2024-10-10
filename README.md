@@ -19,9 +19,9 @@ kind create cluster --name xyz
 ![image](https://github.com/user-attachments/assets/fa11906b-f400-4254-b0d0-a05e49a7de25)
 
 Step 2:
-Note down the commands you Would like to run with the cronjob and the schedule timimngs i.e making backups, creating reports, sending emails, cleanup tasks etc
+Note down the commands you would like to run with the cronjob and the schedule timings i.e making backups, creating reports, sending emails, cleanup tasks etc
 
-(Our SCENERIO for this POC : i am going to clone my repo with cronjob and run my bash script present in my repository at 9AM IST everyday)
+(Our SCENARIO for this POC : i am going to clone my repo with cronjob and run my bash script present in my repository at 9AM IST everyday)
 
 Create a file and the paste the below content.
 ```sh
@@ -71,7 +71,7 @@ Hello from the Kubernetes cluster
 
 
 Step 3:
-Lets make changes in the script with respect to our scenerio.
+Lets make changes in the script with respect to our scenario.
 
 Create one namespace with the name cronjob
 

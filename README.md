@@ -19,9 +19,11 @@ kind create cluster --name xyz
 ![image](https://github.com/user-attachments/assets/fa11906b-f400-4254-b0d0-a05e49a7de25)
 
 Step 2:
-Note down the commands you want to run with the cronjob and the schedule.
+Note down the commands you Would like to run with the cronjob and the schedule timimngs i.e making backups, creating reports, sending emails, cleanup tasks etc
 
-(SCENERIO: i am cloning my repo here and running script present in my repo at 9AM IST everyday)
+(Our SCENERIO for this POC : i am going cloning my repo with cron and run my bash script present in my repo at 9AM IST everyday)
+
+Create a file and the paste the below content.
 
 ```yml
 apiVersion: batch/v1
@@ -44,7 +46,25 @@ spec:
             - date; echo Hello from the Kubernetes cluster
           restartPolicy: OnFailure
 ```
-This is the simple cron which is just printing the date and echoing Hello from the Kubernetes cluster
+This is the simple cron which is just printing the date and echoing Hello from the Kubernetes cluster.
+
+```sh
+kubectl get cronjob hello
+kubectl get jobs --watch
+kubectl get cronjob hello
+```
+
+Note:
+The job name is different from the pod name.
+```sh
+pods=$(kubectl get pods --selector=job-name=hello-change_with_yours -o jsonpath='{.items[*].metadata.name}')
+kubectl logs $pods
+```
+The output is similar to this:
+
+Thrus oct 10 11:02:09 UTC 2024
+Hello from the Kubernetes cluster
+
 
 Step 3:
 Lets make changes in the script with respect to our scenerio.

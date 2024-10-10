@@ -156,7 +156,7 @@ we are successfully able to Clone and Run some set of commands using Job.
 Step 6:
 Let's setup it at 9AM IST with cronjob and run the script which is present in the repo.
 
-Clone my repo and hit
+Clone my repo using below commands:
 ```sh
 git clone https://github.com/Shubham2194/cronjob-k8s.git
 

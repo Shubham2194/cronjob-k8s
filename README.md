@@ -110,6 +110,13 @@ Check the cron status
 ```sh
 kubectl get jobs --watch
 ```
+![image](https://github.com/user-attachments/assets/18202ea3-5aed-4e19-976a-9a93d42dfb0a)
+
+```sh
+kubectl get cronjobs
+```
+![image](https://github.com/user-attachments/assets/b3f3eefc-6a43-479e-9c26-6fe803510160)
+
 
 Get the logs of the cron job
 

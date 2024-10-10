@@ -49,54 +49,45 @@ kubens cronjob
 (kubens is a utility to switch namespaces easily)
 
 * Now we can either try cloning our repo from HTTPS or from SSH through our cronjob yml.
-* SSH is more secure , lets clone repo from SSH (COPY your github repo SSH URL)
+* We are proceeding with HTTPS here, lets clone repo from HTTPS (COPY your github repo HTTPS URL)
 
-Create a Secret which is having our ssh private key using imperative way:
+Create a Secret which is having our Github-token using imperative way:
 
 ```sh
-kubectl create secret generic my-ssh-secret --from-file=ssh-private-key=/Users/your-user/.ssh/id_ed25519
+kubectl create secret generic github-token --from-literal=token=YOUR_TOKEN
 ```
-(if you dont have ssh key present in your local , create one with 
-ssh-keygen )
+
 
 Step 4:
 Add github URL in our cron yml and try running it :
 
 ```yml
 apiVersion: batch/v1
-kind: CronJob
+kind: Job
 metadata:
-  name: sales-sheet-cron
+  name: my-job
 spec:
-  schedule: "* * * * *" # Runs every minute for testing. Adjust as needed.
-  jobTemplate:
+  template:
     spec:
-      template:
-        spec:
-          containers:
-          - name: hello
-            image: node:16-alpine # Using Node.js image to handle npm commands
-            imagePullPolicy: IfNotPresent
-            command:
-            - /bin/sh
-            - -c
-            - |
-              apk add --no-cache openssh # Install SSH client
-              mkdir -p ~/.ssh
-              echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-              chmod 600 ~/.ssh/id_rsa
-              ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-              git clone -b develop git@github.com:your-Github_URL.git
-          restartPolicy: OnFailure
-          # Add SSH private key as a Kubernetes Secret
-          env:
-          - name: SSH_PRIVATE_KEY
-            valueFrom:
-              secretKeyRef:
-                name: my-ssh-secret
-                key: ssh-private-key
+      containers:
+      - name: hello
+        image: node:16-alpine # Using Node.js image to handle npm commands
+        imagePullPolicy: IfNotPresent
+        - name: GITHUB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: github-token
+              key: token
+        command:
+        - /bin/sh
+        - -c
+        - |
+          apk add --no-cache git
+          git clone -b develop https://$GITHUB_TOKEN@github.com/flipspacesit/vizdom.apis.core.git
+      restartPolicy: OnFailure
+
 ```
-This will use our private key and add in the known host.
+Firstly we are creating a job to test if it working fine then we will we add cron and schedule
 
 Step 5:
 Clone my repo and hit
@@ -121,8 +112,9 @@ kubectl get cronjobs
 Get the logs of the cron job
 
 ```sh
- pods=$(kubectl get pods --selector=job-name=sales-sheet-cron-28809103)
+pods=$(kubectl get pods --selector=job-name=my-job -o jsonpath='{.items[*].metadata.name}')
  kubectl logs $pods
 ```
 
 Step 6:
+

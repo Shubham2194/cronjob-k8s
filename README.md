@@ -24,7 +24,9 @@ Note down the commands you Would like to run with the cronjob and the schedule t
 (Our SCENERIO for this POC : i am going to clone my repo with cronjob and run my bash script present in my repository at 9AM IST everyday)
 
 Create a file and the paste the below content.
+```sh
 nano cronjob.yaml
+```
 
 ```yml
 apiVersion: batch/v1

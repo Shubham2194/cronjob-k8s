@@ -24,6 +24,7 @@ Note down the commands you Would like to run with the cronjob and the schedule t
 (Our SCENERIO for this POC : i am going to clone my repo with cronjob and run my bash script present in my repository at 9AM IST everyday)
 
 Create a file and the paste the below content.
+nano cronjob.yaml
 
 ```yml
 apiVersion: batch/v1
@@ -49,6 +50,7 @@ spec:
 This is the simple cron which is just printing the date and echoing Hello from the Kubernetes cluster.
 
 ```sh
+kubectl apply -f cronjob.yaml
 kubectl get cronjob hello
 kubectl get jobs --watch
 kubectl get cronjob hello

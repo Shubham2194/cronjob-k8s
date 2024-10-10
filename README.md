@@ -151,7 +151,7 @@ pods=$(kubectl get pods --selector=job-name=my-job -o jsonpath='{.items[*].metad
 
 ![image](https://github.com/user-attachments/assets/7cc60b69-dd27-4c48-b384-35b745ef9d7b)
 
-we are successfully able to Clone and Run nun some set of commands using Job.
+we are successfully able to Clone and Run some set of commands using Job.
 
 Step 6:
 Let's setup it at 9AM IST with cronjob and run the script which is present in the repo.

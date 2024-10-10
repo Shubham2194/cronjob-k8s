@@ -1,12 +1,18 @@
 # cronjob-k8s
 
+![image](https://github.com/user-attachments/assets/fedf9773-849a-4d80-b061-9c4e06b1341b)
+
+
+
 Lets say you have some scripts that need to be run at 9AM IST in your K8S environment.
 
 what is Cron ?
+
 CronJob is meant for performing regular scheduled actions such as backups, report generation, and so on. One CronJob object is like one line of a crontab (cron table) file on a Unix system. It runs a Job periodically on a given schedule, written in Cron format
 
 Step 1: 
-Lets create a cluster to do POC , i am using kind here for POC.
+Lets create a cluster to do POC , 
+i am using kind here for POC.
 
 kind create cluster --name xyz
 
@@ -14,6 +20,7 @@ kind create cluster --name xyz
 
 Step 2:
 Note down the commands you want to run with the cronjob and the schedule.
+
 (SCENERIO: i am cloning my repo here and running script present in my repo at 9AM IST everyday)
 
 ```yml
@@ -41,7 +48,9 @@ This is the simple cron which is just printing the date and echoing Hello from t
 
 Step 3:
 Lets make changes in the script with respect to our scenerio.
+
 Create one namespace with the name cronjob
+
 ```sh
 kubectl create ns cronjob 
 kubens cronjob
@@ -49,6 +58,7 @@ kubens cronjob
 (kubens is a utility to switch namespaces easily)
 
 * Now we can either try cloning our repo from HTTPS or from SSH through our cronjob yml.
+
 * We are proceeding with HTTPS here, lets clone repo from HTTPS (COPY your github repo HTTPS URL)
 
 Create a Secret which is having our Github-token using imperative way:
@@ -71,7 +81,7 @@ spec:
     spec:
       containers:
       - name: hello
-        image: node:16-alpine # Using Node.js image to handle npm commands
+        image: node:16-alpine # Updated to Node.js 16.x for better package compatibility
         imagePullPolicy: IfNotPresent
         - name: GITHUB_TOKEN
           valueFrom:
@@ -82,20 +92,19 @@ spec:
         - /bin/sh
         - -c
         - |
-          apk add --no-cache git
-          git clone -b develop https://$GITHUB_TOKEN@github.com/flipspacesit/vizdom.apis.core.git
+          npm install -g npm@latest # Ensure npm is updated
+          git clone -b develop https://$GITHUB_TOKEN@github.com/your-repo.git
+          pwd
+          ls && npm -v
+          cd your-repo
+          npm install --no-optional
       restartPolicy: OnFailure
 
 ```
-Firstly we are creating a job to test if it working fine then we will we add cron and schedule
+
+Firstly we are creating a job to test if it working fine then we will set the same as cron and add schedule.
 
 Step 5:
-Clone my repo and hit
-
-```sh
-kubectl apply -f cron.yaml
-```
-
 Check the cron status 
 
 ```sh
@@ -116,5 +125,19 @@ pods=$(kubectl get pods --selector=job-name=my-job -o jsonpath='{.items[*].metad
  kubectl logs $pods
 ```
 
-Step 6:
+![image](https://github.com/user-attachments/assets/7cc60b69-dd27-4c48-b384-35b745ef9d7b)
 
+we are successfully able to Clone and Run nun some set of commands using Job.
+
+Step 6:
+Let's setup it at 9AM IST with cronjob and run the script which is present in the repo.
+
+Clone my repo and hit
+```sh
+git clone https://github.com/Shubham2194/cronjob-k8s.git
+
+kubectl apply -f cron.yaml
+kubectl get cronjobs
+```
+
+Cheers we are able to Setup cron in Kubernetes Successfully !!

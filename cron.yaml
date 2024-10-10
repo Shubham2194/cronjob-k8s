@@ -14,7 +14,7 @@ spec:
             imagePullPolicy: IfNotPresent
             env:
             - name: BASE_URL
-              value: "https://api-dev.flipspaces.app"
+              value: "https://api-xyz.com" #if your api have dependencies use this way , if not remove env block
             - name: GITHUB_TOKEN
               valueFrom:
                 secretKeyRef:
@@ -30,5 +30,5 @@ spec:
               pwd
               ls && npm -v
               cd your-repo
-              npm install --no-optional && bash script.sh 
+              npm install --no-optional && bash script.sh #my script.sh is basically may be can have sql dump commands and send dump to s3
           restartPolicy: OnFailure

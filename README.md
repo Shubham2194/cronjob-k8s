@@ -4,11 +4,11 @@
 
 
 
-Lets say you have some scripts that need to be run at 9AM IST in your K8S environment.
+Assume you need to run a Job periodically on a given schedule,that need to be run at 9AM IST in your K8S environment, we can achieve it using CronJobs.
 
-what is Cron ?
+what is a Cronjob ?
 
-CronJob is meant for performing regular scheduled actions such as backups, report generation, and so on. One CronJob object is like one line of a crontab (cron table) file on a Unix system. It runs a Job periodically on a given schedule, written in Cron format
+A CronJob in Kubernetes is a resource that schedules recurring tasks on a time-based schedule. This is similar to cron tasks in UNIX and are a vital tool for system maintenance and automation.
 
 Step 1: 
 Lets create a cluster to do POC , 
